@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入react核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--引入react-dom,用于支持react操作dom-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--引入babel，用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+    <style>
+        .title {
+            background: orange
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <!--准备好一个容器-->
+    <div id="mydiv"></div>
+    <script type="text/babel">
+        // 1.创建类式组件
+        class Weather extends React.Component {
+            constructor(props) {
+                super(props)
+                // 初始化状态
+                this.state = {
+                    isHot: false
+                }
+                this.changeState = this.changeState.bind(this)
+            }
+            changeState() {
+                // 获取原先的状态
+                const isHot = this.state.isHot;
+                // 状态不可直接更改，要借助一个内置API修改
+                // this.state.isHot = !this.state.isHot 这个是错误的写法
+                this.setState({ isHot: !isHot })
+            }
+            render() {
+                // 读取状态
+                const { isHot } = this.state
+                return <h1 onClick={this.changeState}>今天天气{isHot ? '炎热' : '凉爽'}</h1>
+            }
+
+        }
+
+        // 2.渲染组件到页面
+        ReactDOM.render(<Weather />, document.getElementById("mydiv"));
+
+    </script>
+
+</body>
+
+</html>

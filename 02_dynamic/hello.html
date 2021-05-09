@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入react核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--引入react-dom,用于支持react操作dom-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--引入babel，用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+    <style>
+        .title {
+            background: orange
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <!--准备好一个容器-->
+    <div id="mydiv"></div>
+    <script type="text/babel">
+        // 0. 模拟一些数据
+        const data = ["Angular", "React", "Vue"];
+
+        // 1.创建虚拟dom
+        // 区分 语句和表达式
+        // 表达式会产生一个值，可以放在任何一个需要值的地方
+        const VDOM = (
+            <div>
+                <h1>前端js框架列表</h1>
+
+                <ul>
+                    {data.map((item, index) => {
+                        return <li key={index}>{item}</li>
+                    })}
+                </ul>
+            </div>
+        )
+        // 2.渲染虚拟DOM到页面
+        ReactDOM.render(VDOM, document.getElementById("mydiv"));
+    </script>
+
+</body>
+
+</html>

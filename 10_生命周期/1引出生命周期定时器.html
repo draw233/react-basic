@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入react核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--引入react-dom,用于支持react操作dom-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--引入babel，用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+
+    <title>生命周期</title>
+</head>
+
+<body>
+    <!--准备好一个容器-->
+    <div id="mydiv"></div>
+</body>
+<script type="text/babel">
+    // 1. 创建组件
+    class Life extends React.Component {
+        // 注册状态
+        state = { opacity: 1 }
+
+        death = () => {
+            // 卸载组件
+            ReactDOM.unmountComponentAtNode(document.getElementById("mydiv"))
+        }
+
+        // 组件挂载完毕
+        componentDidMount() {
+            console.log("组件挂载")
+            // 初始化定时器
+            this.timer = setInterval(() => {
+                // 获取原状态
+                let { opacity } = this.state
+                // 减小0.1
+                opacity -= 0.1
+                if (opacity <= 0) opacity = 1
+                // 设置新的透明度
+                this.setState({ opacity })
+            }, 200)
+        }
+
+        componentWillUnmount() {
+            console.log("组件卸载")
+            // 消除定时器
+            clearInterval(this.timer)
+        }
+
+        render() {
+            return (
+                <div>
+                    <h1 style={{ opacity: this.state.opacity }}>React真有趣</h1>
+                    <button onClick={this.death}>关闭</button>
+                </div>
+            )
+        }
+    }
+
+    // 2. 渲染组件
+    ReactDOM.render(<Life />, document.getElementById("mydiv"))
+</script>
+
+</html>
